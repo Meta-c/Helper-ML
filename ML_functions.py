@@ -54,7 +54,7 @@ def pred_and_plot(model,filename,image_shape,class_names=class_names):
     
     pred=model.predict(tf.expand_dims(img,axis=0))
     
-    pred_class=class_names[int(tf.round(pred))]
+    pred_class=class_names[np.argmax(pred)]
     
     plt.imshow(img)
     plt.title(f"Prediction : {pred_class} ")
