@@ -49,7 +49,7 @@ def view_random_image(target_dir, target_class):
 
 
 
-def pred_and_plot(model,filename,class_names=class_names,image_shape=224):
+def pred_and_plot(model,filename,image_shape,class_names=class_names):
     img=load_and_prep_image(filename,img_shape=image_shape)
     
     pred=model.predict(tf.expand_dims(img,axis=0))
