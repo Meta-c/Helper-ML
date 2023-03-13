@@ -59,3 +59,11 @@ def pred_and_plot(model,filename,class_names=class_names):
     plt.imshow(img)
     plt.title(f"Prediction : {pred_class} ")
     plt.axis(False)
+    
+    
+def load_and_prep_image(filename, img_shape):
+    img=tf.io.read_file(filename)
+    img=tf.image.decode_image(img)
+    img=tf.image.resize(img,size=[img_shape,img_shape])
+    img=img/255.
+    return img    
