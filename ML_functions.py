@@ -47,7 +47,7 @@ def view_random_image(target_dir, target_class):
     
     return img
 
-
+class_names=[]
 
 def pred_and_plot(model,filename,image_shape,class_names=class_names):
     img=load_and_prep_image(filename,img_shape=image_shape)
@@ -67,3 +67,18 @@ def load_and_prep_image(filename, img_shape):
     img=tf.image.resize(img,size=[img_shape,img_shape])
     img=img/255.
     return img    
+
+
+def unzip_file(link,file_name):
+    wget.download(link)
+    zip_ref=zipfile.ZipFile(file_name)
+    zip_ref.extractall()
+    zip_ref.close()
+    
+import datetime 
+
+def create_tensorboard_callback(dir_name,experiment_name):
+    log_dir=dir_name+"/"+experiment_name+"/"+datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    tensorboard_callback=tf.keras.callbacks.TensorBoard(log_dir=log_dir)
+    print(f"Saving Tensorboard log files to: {log_dir}")
+    return tensorboard_callback    
