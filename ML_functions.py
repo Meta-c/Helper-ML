@@ -127,9 +127,10 @@ def compare_histories(original_history,new_history,initial_epochs=5):
    
     
 # Create a ModelCheckpoint callback that saves the model's  weights
-def checkpoint_callback_fun(checkpoint_path):    
+def checkpoint_callback_fun(checkpoint_path,monitor,save_weights_only,save_best_only):    
     return tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
-    save_weights_only=True,
-    save_best_only=False,
+    monitor=monitor,                                  
+    save_weights_only=save_weights_only,
+    save_best_only=save_best_only,
     save_freq="epoch", # Save every epoch,
     verbose=1)    
