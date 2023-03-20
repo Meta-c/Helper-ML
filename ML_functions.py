@@ -35,7 +35,7 @@ def view_random_image(target_dir, target_class):
     
     # Get a random image path
     random_image=random.sample(os.listdir(target_folder),1)
-    print(random_image)
+    
     
     # Read the image and plot
     img=mpimg.imread(target_folder+"/"+random_image[0])
