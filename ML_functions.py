@@ -117,9 +117,9 @@ def compare_histories(original_history,new_history,initial_epochs=5):
     
     # Make plots loss
     plt.figure(figsize=(8,8))
-    plt.subplot(2,1,1)
+    plt.subplot(2,1,2)
     plt.plot(total_loss,label="Training Loss")
     plt.plot(total_val_loss,label="Val Loss")
     plt.plot([initial_epochs-1,initial_epochs-1],plt.ylim(),label="Start Fine Tuning")
-    plt.legend(loc="lower right")
+    plt.legend(loc="upper right")
     plt.title("Training and Validation Loss")  
