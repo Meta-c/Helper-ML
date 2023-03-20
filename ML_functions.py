@@ -123,3 +123,13 @@ def compare_histories(original_history,new_history,initial_epochs=5):
     plt.plot([initial_epochs-1,initial_epochs-1],plt.ylim(),label="Start Fine Tuning")
     plt.legend(loc="upper right")
     plt.title("Training and Validation Loss")  
+   
+   
+    
+# Create a ModelCheckpoint callback that saves the model's  weights
+def checkpoint_callback_fun(checkpoint_path):    
+    return tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
+    save_weights_only=True,
+    save_best_only=False,
+    save_freq="epoch", # Save every epoch,
+    verbose=1)    
