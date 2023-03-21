@@ -134,3 +134,41 @@ def checkpoint_callback_fun(checkpoint_path,monitor,save_weights_only,save_best_
     save_best_only=save_best_only,
     save_freq="epoch", # Save every epoch,
     verbose=1)    
+    
+    
+def confusion_matrix(y_true,y_pred,classes):
+# Define the true labels and predicted labels
+    # y_true = y_test
+    # y_pred = np.asarray(tf.round(y_preds),dtype="int32")
+
+    # # Define the classes
+    # classes = ['Class 0', 'Class 1']
+
+    # Create the confusion matrix
+    confusion_matrix = np.zeros((2, 2))
+    for i in range(len(y_true)):
+        confusion_matrix[y_true[i]][y_pred[i]] += 1
+
+    # Define the figure and axis
+    fig, ax = plt.subplots()
+    im = ax.imshow(confusion_matrix, cmap='Blues')
+
+    # Add the labels to the axis
+    ax.set_xticks(np.arange(len(classes)))
+    ax.set_yticks(np.arange(len(classes)))
+    ax.set_xticklabels(classes)
+    ax.set_yticklabels(classes)
+
+    # Add the values to the cells
+    for i in range(len(classes)):
+        for j in range(len(classes)):
+            text = ax.text(j, i, confusion_matrix[i]   [j], ha='center', va='center', color='black')
+
+    # Add a title
+    ax.set_title("Confusion Matrix")
+
+    # Add a colorbar
+    cbar = ax.figure.colorbar(im, ax=ax)
+
+    # Show the plot
+    plt.show()    
