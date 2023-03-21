@@ -148,7 +148,7 @@ def confusion_matrix(y_true,y_pred,classes,figsize):
         confusion_matrix[y_true[i], y_pred[i]] += 1
 
     # Define the figure and axis
-    fig, ax = plt.subplots(figsize=figsize)
+    fig, ax = plt.subplots(figsize=(figsize,figsize))
     
     
     # Create a heatmap of the confusion matrix
