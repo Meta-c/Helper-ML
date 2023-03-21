@@ -143,9 +143,9 @@ def confusion_matrix(y_true,y_pred,classes,index):
 
     # # Define the classes
     # classes = ['Class 0', 'Class 1']
-
+    num_classes=len(classes)
     # Create the confusion matrix
-    confusion_matrix = np.zeros((index, index))
+    confusion_matrix = np.zeros((num_classes, num_classes))
     for i in range(len(y_true)):
         confusion_matrix[y_true[i]][y_pred[i]] += 1
 
