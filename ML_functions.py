@@ -160,8 +160,8 @@ def confusion_matrix(y_true,y_pred,classes,figsize):
     # Set the axis labels and ticks
     ax.set_xticks(np.arange(num_classes))
     ax.set_yticks(np.arange(num_classes))
-    ax.set_xticklabels(np.arange(num_classes), fontsize=8)
-    ax.set_yticklabels(np.arange(num_classes), fontsize=8)
+    ax.set_xticklabels(np.arange(classes), fontsize=8)
+    ax.set_yticklabels(np.arange(classes), fontsize=8)
     ax.set_xlabel('Predicted Label', fontsize=16)
     ax.set_ylabel('True Label', fontsize=16)
 
