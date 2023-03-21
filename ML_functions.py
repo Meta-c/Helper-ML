@@ -136,7 +136,7 @@ def checkpoint_callback_fun(checkpoint_path,monitor,save_weights_only,save_best_
     verbose=1)    
     
     
-def confusion_matrix(y_true,y_pred,classes,index):
+def confusion_matrix(y_true,y_pred,classes):
 # Define the true labels and predicted labels
     # y_true = y_test
     # y_pred = np.asarray(tf.round(y_preds),dtype="int32")
