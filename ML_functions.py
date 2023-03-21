@@ -137,38 +137,52 @@ def checkpoint_callback_fun(checkpoint_path,monitor,save_weights_only,save_best_
     
     
 def confusion_matrix(y_true,y_pred,classes):
-# Define the true labels and predicted labels
-    # y_true = y_test
-    # y_pred = np.asarray(tf.round(y_preds),dtype="int32")
 
-    # # Define the classes
-    # classes = ['Class 0', 'Class 1']
     num_classes=len(classes)
+    
     # Create the confusion matrix
     confusion_matrix = np.zeros((num_classes, num_classes))
+    
+    # Populate the confusion matrix
     for i in range(len(y_true)):
-        confusion_matrix[y_true[i]][y_pred[i]] += 1
+        confusion_matrix[y_true[i], y_pred[i]] += 1
 
     # Define the figure and axis
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(20,20))
+    
+    
+    # Create a heatmap of the confusion matrix
     im = ax.imshow(confusion_matrix, cmap='Blues')
 
-    # Add the labels to the axis
-    ax.set_xticks(np.arange(len(classes)))
-    ax.set_yticks(np.arange(len(classes)))
-    ax.set_xticklabels(classes)
-    ax.set_yticklabels(classes)
-
-    # Add the values to the cells
-    for i in range(len(classes)):
-        for j in range(len(classes)):
-            text = ax.text(j, i, confusion_matrix[i]   [j], ha='center', va='center', color='black')
-
-    # Add a title
-    ax.set_title("Confusion Matrix")
-
-    # Add a colorbar
+    # Add a colorbar to the figure
     cbar = ax.figure.colorbar(im, ax=ax)
 
-    # Show the plot
-    plt.show()    
+    # Set the axis labels and ticks
+    ax.set_xticks(np.arange(num_classes))
+    ax.set_yticks(np.arange(num_classes))
+    ax.set_xticklabels(np.arange(num_classes), fontsize=8)
+    ax.set_yticklabels(np.arange(num_classes), fontsize=8)
+    ax.set_xlabel('Predicted Label', fontsize=16)
+    ax.set_ylabel('True Label', fontsize=16)
+
+    # Rotate the x-axis labels for better visibility
+    plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
+            rotation_mode="anchor")
+
+    # Add the confusion values to the heatmap
+    for i in range(num_classes):
+        for j in range(num_classes):
+            text = ax.text(j, i, confusion_matrix[i, j],
+                        ha="center", va="center", color="w", fontsize=6)
+
+    # Add a title to the figure
+    ax.set_title("Confusion matrix", fontsize=20)
+
+    # Display the figure
+    plt.show()
+
+
+
+
+
+
