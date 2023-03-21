@@ -136,7 +136,7 @@ def checkpoint_callback_fun(checkpoint_path,monitor,save_weights_only,save_best_
     verbose=1)    
     
     
-def confusion_matrix(y_true,y_pred,classes):
+def confusion_matrix(y_true,y_pred,classes,figsize):
 
     num_classes=len(classes)
     
@@ -148,7 +148,7 @@ def confusion_matrix(y_true,y_pred,classes):
         confusion_matrix[y_true[i], y_pred[i]] += 1
 
     # Define the figure and axis
-    fig, ax = plt.subplots(figsize=(20,20))
+    fig, ax = plt.subplots(figsize=figsize)
     
     
     # Create a heatmap of the confusion matrix
