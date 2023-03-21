@@ -61,12 +61,12 @@ def pred_and_plot(model,filename,image_shape,class_names=class_names):
     plt.axis(False)
     
     
-def load_and_prep_image(filename, img_shape):
+def load_and_prep_image(filename, img_shape,scale=True):
     img=tf.io.read_file(filename)
     img=tf.image.decode_image(img,channels=3)
     img=tf.image.resize(img,size=[img_shape,img_shape])
     if scale:
-        return img=img/255.
+        return img/255.
     else:
         return img
        
