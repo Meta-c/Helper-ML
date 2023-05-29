@@ -26,7 +26,9 @@ def plot_loss_curves(history):
     plt.legend()
     
     
-    
+#########################################################################   
+
+
     
     
 def view_random_image(target_dir, target_class):
@@ -49,6 +51,14 @@ def view_random_image(target_dir, target_class):
 
 class_names=[]
 
+
+
+
+#########################################################################
+
+
+
+
 def pred_and_plot(model,filename,image_shape,class_names=class_names):
     img=load_and_prep_image(filename,img_shape=image_shape)
     
@@ -59,6 +69,16 @@ def pred_and_plot(model,filename,image_shape,class_names=class_names):
     plt.imshow(img)
     plt.title(f"Prediction : {pred_class} ")
     plt.axis(False)
+    
+    
+    
+    
+    
+########################################################################    
+    
+    
+    
+    
     
     
 def load_and_prep_image(filename, img_shape,scale=True):
@@ -72,6 +92,13 @@ def load_and_prep_image(filename, img_shape,scale=True):
        
 
 
+
+#########################################################################
+
+
+
+
+
 def unzip_file(link,file_name):
     wget.download(link)
     zip_ref=zipfile.ZipFile(file_name)
@@ -79,6 +106,13 @@ def unzip_file(link,file_name):
     zip_ref.close()
     
 import datetime 
+
+
+
+#########################################################################
+
+
+
 
 def create_tensorboard_callback(dir_name,experiment_name):
     log_dir=dir_name+"/"+experiment_name+"/"+datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -88,8 +122,14 @@ def create_tensorboard_callback(dir_name,experiment_name):
 
 
 
-# Create function for comparing training histories
 
+#########################################################################
+
+
+
+
+
+# Create function for comparing training histories
 def compare_histories(original_history,new_history,initial_epochs=5):
     # Get Original history measurments
     acc =original_history.history["accuracy"]
@@ -128,6 +168,11 @@ def compare_histories(original_history,new_history,initial_epochs=5):
     plt.title("Training and Validation Loss")  
    
    
+
+
+
+#########################################################################
+
     
 # Create a ModelCheckpoint callback that saves the model's  weights
 def checkpoint_callback_fun(checkpoint_path,monitor,save_weights_only,save_best_only):    
@@ -138,6 +183,10 @@ def checkpoint_callback_fun(checkpoint_path,monitor,save_weights_only,save_best_
     save_freq="epoch", # Save every epoch,
     verbose=1)    
     
+
+
+#########################################################################
+
     
 def confusion_matrix(y_true,y_pred,classes,figsize):
 
@@ -186,6 +235,42 @@ def confusion_matrix(y_true,y_pred,classes,figsize):
 
 
 
+#########################################################################
+
+
+# MASE implementation
+def mean_absolute_scaled_error(y_true,y_pred):
+    mae=tf.reduce_mean(tf.abs(y_true-y_pred))
+    
+    # Find MAE of naive forecast (no seasonality)
+    mae_naive_no_season= tf.reduce_mean(tf.abs(y_true[1:] - y_true[:-1]))
+    
+    return mae/mae_naive_no_season
 
 
 
+#########################################################################
+
+
+# Create function to take model preds and truth values \
+def evaluate_preds(y_true,y_pred):
+    # Make sure float32 dtype 
+    y_true= tf.cast(y_true,dtype=tf.float32)
+    y_pred=tf.cast(y_pred,dtype=tf.float32)
+    
+    # Calculate various evaluation metrics 
+    mae = tf.keras.metrics.mean_absolute_error(y_true,y_pred)
+    mse = tf.keras.metrics.mean_squared_error(y_true,y_pred)
+    rmse= tf.sqrt(mse)
+    mape=tf.keras.metrics.mean_absolute_percentage_error(y_true,y_pred)
+    mase = mean_absolute_scaled_error(y_true,y_pred)
+    
+    return {"mae": mae.numpy(),
+            "mse": mse.numpy(),
+            "rmse":rmse.numpy(),
+            "mape": mape.numpy(),
+            "mase": mase.numpy(),
+            }
+
+
+#########################################################################
