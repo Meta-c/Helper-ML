@@ -175,13 +175,15 @@ def compare_histories(original_history,new_history,initial_epochs=5):
 
     
 # Create a ModelCheckpoint callback that saves the model's  weights
-def checkpoint_callback_fun(checkpoint_path,monitor,save_weights_only,save_best_only):    
-    return tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
-    monitor=monitor,                                  
-    save_weights_only=save_weights_only,
-    save_best_only=save_best_only,
-    save_freq="epoch", # Save every epoch,
-    verbose=1)    
+
+def callback(path):
+
+    # Define the file path to save the best model
+    model_save_path = path
+
+    # Create the ModelCheckpoint callback
+    checkpoint = ModelCheckpoint(model_save_path, monitor='val_accuracy', save_best_only=True, mode='max', verbose=1)
+    return checkpoint)    
     
 
 
@@ -357,4 +359,3 @@ def heamap(df):
     plt.show()
 
 
-    
