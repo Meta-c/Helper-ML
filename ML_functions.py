@@ -183,7 +183,7 @@ def callback(path):
 
     # Create the ModelCheckpoint callback
     checkpoint = ModelCheckpoint(model_save_path, monitor='val_accuracy', save_best_only=True, mode='max', verbose=1)
-    return checkpoint)    
+    return checkpoint   
     
 
 
@@ -359,3 +359,34 @@ def heamap(df):
     plt.show()
 
 
+#################################################################
+
+def get_positively_correlated_columns(data_frame, target_column, threshold=0.25):
+    """
+    Takes a Pandas DataFrame and a target column name and returns the names of positively correlated
+    columns with the target column that have at least the specified threshold correlation.
+
+    Parameters:
+        data_frame (pd.DataFrame): The input data frame.
+        target_column (str): The name of the target column.
+        threshold (float, optional): The minimum correlation threshold. Defaults to 0.25.
+
+    Returns:
+        list: A list containing the names of positively correlated columns with the target column
+              that meet the threshold requirement.
+    """
+    # Calculate the correlation matrix
+    correlation_matrix = data_frame.corr()
+
+    # Get correlations between the target column and other columns
+    target_correlations = correlation_matrix[target_column]
+
+    # Filter the correlations to keep only positive correlations (excluding the target column itself)
+    positively_correlated_columns = target_correlations[
+        (target_correlations > threshold) & (target_correlations.index != target_column)
+    ]
+
+    # Get the names of positively correlated columns
+    positively_correlated_column_names = positively_correlated_columns.index.tolist()
+
+    return positively_correlated_column_names
