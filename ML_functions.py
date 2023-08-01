@@ -274,3 +274,87 @@ def evaluate_preds(y_true,y_pred):
 
 
 #########################################################################
+
+
+def missing_values_check(df):
+    # Check for missing values
+    missing_values = df.isnull().sum()
+
+    # Calculate the percentage of missing values for each column
+    missing_percentage = (missing_values / len(df)) * 100
+
+    # Print the missing values count and percentage for each column
+    print("\nMissing Values Percentage:")
+    print(missing_percentage)
+
+
+##################################################################
+
+
+def duplicate_check(df):
+    # Check for duplicate rows
+    duplicate_rows = df.duplicated()
+    duplicate_rows_count = duplicate_rows.sum()
+
+    # Check for inconsistent values within columns
+    inconsistent_values = []
+    for column in df.columns:
+        unique_values = df[column].unique()
+        if len(unique_values) > 1:
+            print(column)
+            inconsistent_values.append(column)
+
+
+    # Calculate the Duplicate percentage 
+    duplicate_percentage = (duplicate_rows_count / len(df)) * 100
+
+    # Print the results
+    # print("Duplicate Rows Count:", duplicate_rows_count)
+    # print("Total Rows:",agile_df.__len__())
+    print("Duplicate Rows Percentage =", duplicate_percentage )
+    print("Inconsistent Columns:", inconsistent_values)
+
+
+
+##################################################################
+
+def two_columns_correlation(df,column1,column2):
+    
+    # Step 4: Calculate Correlation Coefficient
+    correlation_coefficient = df[column1].corr(df[column2])
+
+    # Step 5: Interpret the Correlation
+    print(f"Correlation between {column1} and {column2}: {correlation_coefficient}")
+
+    # Optional: If you want to visualize the correlation, you can create a scatter plot
+    import matplotlib.pyplot as plt
+
+    plt.scatter(df[column1], df[column2])
+    plt.xlabel(column1)
+    plt.ylabel(column2)
+    plt.title(f"Scatter plot between {column1} and {column2}")
+    plt.show()
+
+
+################################################################
+
+
+def heamap(df):
+    import seaborn as sns
+    # Heatmap is very effecient in finding collerations between features
+
+    # Calculate the correlation matrix
+    correlation_matrix = df.corr()
+
+    # Create a heatmap
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(correlation_matrix,annot=True, cmap='coolwarm', center=0)
+
+    # Filter out only the positively correlated values
+    positive_correlations = correlation_matrix[correlation_matrix > 0]
+
+
+    plt.show()
+
+
+    
